@@ -1,31 +1,27 @@
 package com.awesomepizza.awesomepizza.models;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@AllArgsConstructor
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
-    private String status;
+    @Column(name = "status", nullable = false)
+    private StatusEnum status;
 
-    @ElementCollection
-    private List<PizzaOrder> pizzas;
-
-    @Column(nullable = false)
-    private double importo;
-
+    @Column(name = "importo", nullable = false)
+    private Double importo;
 
 }

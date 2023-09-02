@@ -1,29 +1,30 @@
 package com.awesomepizza.awesomepizza.models;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "pizzas")
+@AllArgsConstructor
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Pizza {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @ElementCollection
-    private List<String> ingredients;
+    @Column(name = "cost", nullable = false)
+    private Double cost;
 
-    @Column(nullable = false)
-    private double cost;
+    @Column(name = "ingredients",  columnDefinition = "JSON")
+    private String ingredients;
+
 }

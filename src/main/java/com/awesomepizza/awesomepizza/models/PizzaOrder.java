@@ -6,26 +6,33 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "pizza_order")
+@Table(name = "pizza_orders")
+@AllArgsConstructor
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class PizzaOrder {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id()
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @Column(name = "order_id", nullable = false, insertable=false, updatable=false)
+    private Long orderId;
 
-    @ManyToOne
-    @JoinColumn(name = "pizza_id")
-    private Pizza pizza;
+    @Column(name = "pizza_id", nullable = false, insertable=false, updatable=false)
+    private Long pizzaId;
 
-    @Column(nullable = false)
-    private int quantity;
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
+
+    @ManyToMany
+    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, updatable = false)
+    private List<Order> order;
+
+    @ManyToMany
+    @JoinColumn(name = "pizza_id", referencedColumnName = "id", nullable = false, updatable = false)
+    private List<Pizza> pizza;
 }
