@@ -2,13 +2,11 @@ package com.awesomepizza.awesomepizza.controllers;
 
 import com.awesomepizza.awesomepizza.exceptions.OrderNotFoundException;
 import com.awesomepizza.awesomepizza.models.Order;
-import com.awesomepizza.awesomepizza.models.StatusEnum;
-import com.awesomepizza.awesomepizza.repositories.OrderRepository;
+import com.awesomepizza.awesomepizza.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -28,15 +26,26 @@ public class OrderController {
 
     @PostMapping("/neworder")
     public Order createOrder(@RequestBody Order order) {
-        return orderRepository.save(order);
+        return salvaOrdine(order);
     }
 
     @PutMapping("/aggiornaOrdine")
     public Order updateOrderStatus(@RequestParam Long id) throws Throwable {
         Order existingOrder = orderRepository.findById(id).orElseThrow(new OrderNotFoundException("Ordine non trovato"));
-        existingOrder.setStatus(existingOrder.getStatus().nextStatus());
+        com.awesomepizza.awesomepizza.models.StatusEnum status = existingOrder.getStatus();
+        existingOrder.setStatus(status.nextStatus());
+        return salvaOrdine(existingOrder);
+    }
 
+    private Order salvaOrdine(Order existingOrder) {
         return orderRepository.save(existingOrder);
     }
+
+    @DeleteMapping("/deleteOrder")
+    public void deleteOrder(@RequestParam Long id) throws Throwable {
+        Order existingOrder = orderRepository.findById(id).orElseThrow(new OrderNotFoundException("Ordine non trovato"));
+        orderRepository.delete(existingOrder);
+    }
+
 
 }

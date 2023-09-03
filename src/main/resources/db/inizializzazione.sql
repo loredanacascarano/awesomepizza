@@ -29,3 +29,10 @@ CREATE TABLE pizza_order (
                              FOREIGN KEY (order_id) REFERENCES orders(id),
                              FOREIGN KEY (pizza_id) REFERENCES pizzas(id)
 );
+
+CREATE TABLE hibernate_sequence (
+                                    id INT NOT NULL AUTO_INCREMENT,
+                                    next_val BIGINT NOT NULL,
+                                    PRIMARY KEY (id)
+);
+
