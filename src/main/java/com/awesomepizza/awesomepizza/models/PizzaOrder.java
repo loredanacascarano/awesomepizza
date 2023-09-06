@@ -1,17 +1,16 @@
 package com.awesomepizza.awesomepizza.models;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
+
+@Data
 @Entity
 @Table(name = "pizza_order")
-@AllArgsConstructor
-@Data
 @NoArgsConstructor
 public class PizzaOrder {
 
@@ -19,10 +18,10 @@ public class PizzaOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "order_id", nullable = false, insertable=false, updatable=false)
+    @Column(name = "order_id")
     private Long orderId;
 
-    @Column(name = "pizza_id", nullable = false, insertable=false, updatable=false)
+    @Column(name = "pizza_id")
     private Long pizzaId;
 
     @Column(name = "quantity", nullable = false)
@@ -35,4 +34,11 @@ public class PizzaOrder {
     @ManyToMany
     @JoinColumn(name = "pizza_id", referencedColumnName = "id", nullable = false, updatable = false)
     private List<Pizza> pizza;
+
+    public PizzaOrder(Long orderId, Long pizzaId, Integer quantity) {
+        this.orderId = orderId;
+        this.pizzaId = pizzaId;
+        this.quantity = quantity;
+    }
+
 }

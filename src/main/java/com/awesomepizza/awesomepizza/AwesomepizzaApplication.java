@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AwesomepizzaApplication {
 
 	public static void main(String[] args) {
-		System.out.println("cavolo");
 		SpringApplication.run(AwesomepizzaApplication.class, args);
 	}
 
